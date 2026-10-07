@@ -51,6 +51,18 @@
     .ceh-name span{font-size:19px;letter-spacing:.15em;display:block;text-align:center;margin-top:16px}
     .cover.ceh:before,.cover.ceh:after{content:"";position:absolute;width:100px;height:100px;border:1px solid #19291c30;border-radius:22px;transform:rotate(35deg)}
     .cover.ceh:before{top:-35px;right:-15px}.cover.ceh:after{bottom:-40px;left:-20px}
+    .cover.smena,.cover.tish{display:block;background:#3b3030}
+    .cover img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .4s}
+    .cover.smena img{object-position:center 30%}
+    .cover.tish img{object-position:center 60%}
+    .cover.tish:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#30222bb3,transparent 80%)}
+    .new-cover-name{position:absolute;z-index:1;left:26px;bottom:24px;color:white;font-size:42px;font-weight:800;letter-spacing:-.04em;line-height:1.2}
+    .cover.smena .new-cover-name{background:#ee412e;color:#191918;padding:8px 16px;left:0;bottom:0;font-size:34px}
+    .cover.tish .new-cover-name{font-family:Georgia,serif;font-weight:400;letter-spacing:.14em}
+    .project-links{display:flex;flex-wrap:wrap;align-items:center;gap:18px}
+    .source-link{font-size:13px;color:var(--muted);padding:10px 0;border-bottom:1px solid var(--line)}
+    .source-link:hover{color:var(--accent)}
+    @media(hover:hover){a.cover:hover img{transform:scale(1.025)}}
     .number{font-size:12px;color:var(--muted);margin:0 0 12px}
     h3{font-size:32px;line-height:1.2;letter-spacing:-.03em;margin:0 0 14px}
     .project p.description{font-size:16px;color:var(--muted);margin:0 0 20px;max-width:430px}
@@ -95,7 +107,7 @@
         <div class="art" aria-hidden="true"><div class="orbit"></div><div class="orbit two"></div><div class="orbit three"></div><div class="core"></div><div class="dot"></div><div class="art-label">ИДЕЯ → ФОРМА → ПРОЕКТ</div></div>
       </section>
       <section id="projects" aria-labelledby="projects-title">
-        <div class="section-head"><h2 id="projects-title">Проекты</h2><span class="count">02 проекта</span></div>
+        <div class="section-head"><h2 id="projects-title">Проекты</h2><span class="count">04 проекта</span></div>
         <article class="project">
           <div class="cover aura" aria-hidden="true"><div class="aura-ring"></div><div class="aura-name">AURA</div><div class="cover-sub">Красота начинается с ощущения</div></div>
           <div>
@@ -114,10 +126,28 @@
             <p class="status">В разработке</p><br><a class="button" href="/86-ceh/">Играть <span aria-hidden="true">↗</span></a>
           </div>
         </article>
+        <article class="project">
+          <a class="cover smena" href="/smena/" aria-label="Открыть сайт СМЕНА"><img src="/smena/images/collection-small.jpg" alt="Три выразительных образа студии волос СМЕНА" width="900" height="600" loading="lazy"><span class="new-cover-name" aria-hidden="true">СМЕНА ↗</span></a>
+          <div>
+            <p class="number">03 / Студия волос</p><h3>СМЕНА</h3>
+            <p class="description">Смелая студия волос с эстетикой модного журнала. Коллекция образов и конструктор визита с расчётом цены и времени.</p>
+            <ul class="tags" aria-label="Технологии СМЕНЫ"><li>Astro</li><li>TypeScript</li><li>Конструктор визита</li></ul>
+            <div class="project-links"><a class="button" href="/smena/">Открыть сайт <span aria-hidden="true">↗</span></a><a class="source-link" href="https://github.com/doxychIs/doxychIs.github.io/tree/main/projects/smena">Исходники ↗</a></div>
+          </div>
+        </article>
+        <article class="project">
+          <a class="cover tish" href="/tish/" aria-label="Открыть сайт ТИШЬ"><img src="/tish/images/room-small.jpg" alt="Мягкий свет и натуральные материалы пространства ТИШЬ" width="900" height="600" loading="lazy"><span class="new-cover-name" aria-hidden="true">ТИШЬ</span></a>
+          <div>
+            <p class="number">04 / Пространство ухода</p><h3>ТИШЬ</h3>
+            <p class="description">Атмосферное пространство бережного ухода. Подробные маршруты для лица и тела, план комфортного визита и интерактивная «Минута тишины».</p>
+            <ul class="tags" aria-label="Технологии ТИШИ"><li>Astro</li><li>TypeScript</li><li>Минута тишины</li></ul>
+            <div class="project-links"><a class="button" href="/tish/">Открыть сайт <span aria-hidden="true">↗</span></a><a class="source-link" href="https://github.com/doxychIs/doxychIs.github.io/tree/main/projects/tish">Исходники ↗</a></div>
+          </div>
+        </article>
       </section>
       <section id="about" class="about" aria-labelledby="about-title">
         <div><p class="eyebrow">Место для новых идей</p><h2 id="about-title">Портфолио растёт<br>вместе с проектами.</h2></div>
-        <p>Здесь я собираю сайты, игры и другие цифровые проекты. Открывайте проекты по ссылкам выше: знакомьтесь с AURA или попробуйте «86 ЦЕХ» прямо в браузере.</p>
+        <p>Здесь я собираю сайты, игры и другие цифровые проекты. Открывайте проекты по ссылкам выше: знакомьтесь с AURA, СМЕНОЙ и ТИШЬЮ или попробуйте «86 ЦЕХ» прямо в браузере.</p>
       </section>
     </main>
     <footer><span>doxychIs · Сайты, игры и эксперименты</span><a href="https://github.com/doxychIs">Мои проекты на GitHub ↗</a></footer>

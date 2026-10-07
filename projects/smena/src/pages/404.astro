@@ -1,0 +1,5 @@
+---
+import { withBase } from '../lib/urls';
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="Страница не найдена"><div class="page-intro page-pad error-page"><span class="eyebrow">Ошибка / 404</span><h1>ДРУГОЕ<br /><span>НАПРАВЛЕНИЕ.</span></h1><p>Этой страницы нет. Начните с коллекции или соберите свой визит.</p><a class="button button-dark" href={withBase("/")}>На главную ↗</a></div></Layout>

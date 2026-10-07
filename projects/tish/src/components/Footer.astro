@@ -1,0 +1,6 @@
+---
+import { withBase } from '../lib/urls';
+import Mark from './Mark.astro';
+import config from '../../business.config.json';
+---
+<footer class="site-footer"><div class="footer-invitation"><Mark /><p>Выделите время.<br /><span>Остальное подождёт.</span></p><a class="button button-outline-light" href={withBase("/visit/")}>Спланировать визит <span aria-hidden="true">↗</span></a></div><div class="footer-columns"><a class="footer-brand" href={withBase("/")}>ТИШЬ<span>пространство бережного ухода</span></a><div><p>{config.city} · {config.location.toLowerCase()}</p><p>{config.hours}</p>{config.address&&<p>{config.address}</p>}{config.phone&&<a href={`tel:${config.phone.replace(/[^+\d]/g,'')}`}>{config.phone}</a>}{config.email&&<a href={`mailto:${config.email}`}>{config.email}</a>}</div><nav aria-label="Навигация внизу страницы"><a href={withBase("/uhod/")}>Выбрать уход</a><a href={withBase("/space/")}>Как всё устроено</a><a href={withBase("/privacy/")}>Конфиденциальность</a></nav></div><div class="footer-bottom"><span>В вашем ритме.</span><span>© {new Date().getFullYear()} ТИШЬ</span></div></footer>

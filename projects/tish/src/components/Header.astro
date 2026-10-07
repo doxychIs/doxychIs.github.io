@@ -1,0 +1,7 @@
+---
+import { withBase } from '../lib/urls';
+import Mark from './Mark.astro';
+const path=Astro.url.pathname.slice(import.meta.env.BASE_URL.length - 1);
+const links=[{href:'/uhod/',label:'Маршруты ухода'},{href:'/space/',label:'Пространство'},{href:'/#pause',label:'Минута тишины'}];
+---
+<header class="site-header"><a class="brand" href={withBase("/")} aria-label="ТИШЬ — главная"><Mark /><span>ТИШЬ</span></a><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="navigation">Меню <span aria-hidden="true">☰</span></button><nav id="navigation" aria-label="Основная навигация">{links.map(link=><a href={withBase(link.href)} aria-current={link.href!=='/#pause'&&path.startsWith(link.href)?'page':undefined}>{link.label}</a>)}<a class="nav-visit" href={withBase("/visit/")} aria-current={path==='/visit/'?'page':undefined}>Планировать визит <span aria-hidden="true">↗</span></a></nav></header>

@@ -1,0 +1,17 @@
+{
+  "name": "СМЕНА",
+  "city": "Пермь",
+  "location": "Центр города",
+  "siteUrl": "https://doxychis.github.io/smena/",
+  "address": "",
+  "phone": "",
+  "email": "",
+  "bookingUrl": "",
+  "hours": "Ежедневно, 10:00–20:00",
+  "legal": {
+    "operatorName": "",
+    "registrationNumber": "",
+    "privacyEmail": ""
+  },
+  "basePath": "/smena/"
+}

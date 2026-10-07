@@ -1,0 +1,16 @@
+---
+import { withBase } from '../lib/urls';
+import '@fontsource/prata/cyrillic-400.css';
+import '@fontsource/prata/latin-400.css';
+import '@fontsource/noto-sans/cyrillic-400.css';
+import '@fontsource/noto-sans/cyrillic-500.css';
+import '@fontsource/noto-sans/latin-400.css';
+import '../styles/site.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import config from '../../business.config.json';
+interface Props { title?:string; description?:string; image?:string; }
+const {title='Пространство бережного ухода в Перми',description='ТИШЬ — спокойное пространство ухода за лицом, телом и руками в Перми. Мягкие прикосновения, понятные маршруты и время для себя.',image='/images/room.jpg'}=Astro.props;
+const canonical=config.siteUrl?new URL(Astro.url.pathname,config.siteUrl).href:undefined;
+---
+<!doctype html><html lang="ru"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>{title} — ТИШЬ</title><meta name="description" content={description} /><meta name="theme-color" content="#eee5e2" /><link rel="icon" href={withBase("/favicon.svg")} type="image/svg+xml" />{canonical&&<link rel="canonical" href={canonical} />}<meta property="og:type" content="website" /><meta property="og:locale" content="ru_RU" /><meta property="og:site_name" content="ТИШЬ" /><meta property="og:title" content={`${title} — ТИШЬ`} /><meta property="og:description" content={description} /><meta property="og:image" content={config.siteUrl?new URL(withBase(image),config.siteUrl).href:image} /><meta property="og:image:alt" content="Мягкий свет и натуральные ткани в пространстве ТИШЬ" />{canonical&&<meta property="og:url" content={canonical} />}<script is:inline>document.documentElement.classList.add('js');</script></head><body><a href="#main" class="skip">Перейти к содержимому</a><Header /><main id="main"><slot /></main><Footer /><script>import '../scripts/navigation';</script></body></html>

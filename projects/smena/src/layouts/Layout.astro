@@ -1,0 +1,36 @@
+---
+import { withBase } from '../lib/urls';
+import '@fontsource/oswald/cyrillic-700.css';
+import '@fontsource/oswald/latin-700.css';
+import '@fontsource/golos-text/cyrillic-400.css';
+import '@fontsource/golos-text/cyrillic-500.css';
+import '@fontsource/golos-text/cyrillic-600.css';
+import '@fontsource/golos-text/latin-400.css';
+import '../styles/site.css';
+import config from '../../business.config.json';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+interface Props { title?: string; description?: string; image?: string; }
+const { title = 'Студия волос в Перми', description = 'СМЕНА — студия выразительных стрижек и осмысленного цвета в Перми. Найдите свой образ и соберите визит под себя.', image = '/images/collection.jpg' } = Astro.props;
+const canonical = config.siteUrl ? new URL(Astro.url.pathname, config.siteUrl).href : undefined;
+const socialImage = config.siteUrl ? new URL(withBase(image), config.siteUrl).href : image;
+---
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} — СМЕНА</title><meta name="description" content={description} />
+    <meta name="theme-color" content="#ee412e" /><link rel="icon" href={withBase("/favicon.svg")} type="image/svg+xml" />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta property="og:type" content="website" /><meta property="og:locale" content="ru_RU" />
+    <meta property="og:site_name" content="СМЕНА" /><meta property="og:title" content={`${title} — СМЕНА`} />
+    <meta property="og:description" content={description} /><meta property="og:image" content={socialImage} />
+    <meta property="og:image:alt" content="Коллекция выразительных стрижек СМЕНА" />{canonical && <meta property="og:url" content={canonical} />}
+    <script is:inline>document.documentElement.classList.add('js');</script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Перейти к содержимому</a>
+    <Header /><main id="main"><slot /></main><Footer />
+    <script>import '../scripts/navigation';</script>
+  </body>
+</html>

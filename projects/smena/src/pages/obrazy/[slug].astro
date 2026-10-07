@@ -1,0 +1,11 @@
+---
+import { withBase } from '../../lib/urls';
+import Layout from '../../layouts/Layout.astro';
+import { looks, services, money, duration } from '../../data/catalog';
+export function getStaticPaths() { return looks.map(look=>({params:{slug:look.slug},props:{look}})); }
+const { look } = Astro.props;
+const service = services.find(s=>s.id === look.service)!;
+---
+<Layout title={look.title} description={look.detail} image={`/images/${look.image}.webp`}>
+  <section class="look-detail"><div class="detail-image"><img src={withBase(`/images/${look.image}.webp`)} width="512" height="1024" alt={look.alt} fetchpriority="high" /><span class="detail-index">/{look.number}</span></div><div class="detail-copy"><a class="back-link" href={withBase("/obrazy/")}>← Все образы</a><span class="eyebrow">{look.tag}</span><h1>{look.title}</h1><p class="lead">{look.sub}</p><p>{look.detail}</p><div class="detail-facts"><div><h2>В обычный день</h2><p>{look.everyday}</p></div><div><h2>Ритм ухода</h2><p>{look.maintenance}</p></div></div><div class="detail-service"><span>{service.name}</span><strong>от {money(service.price)}</strong><span>{duration(service.minutes)}</span></div><a class="button button-red" href={withBase(`/visit/?service=${service.id}`)}>Собрать такой визит <span aria-hidden="true">↗</span></a><p class="fine">Финальный оттенок и форма зависят от исходных волос. Стоимость сложного окрашивания уточняется после консультации.</p></div></section>
+</Layout>

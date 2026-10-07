@@ -1,0 +1,17 @@
+{
+  "name": "ТИШЬ",
+  "city": "Пермь",
+  "location": "Тихий центр",
+  "siteUrl": "https://doxychis.github.io/tish/",
+  "address": "",
+  "phone": "",
+  "email": "",
+  "bookingUrl": "",
+  "hours": "Ежедневно, 10:00–21:00",
+  "legal": {
+    "operatorName": "",
+    "registrationNumber": "",
+    "privacyEmail": ""
+  },
+  "basePath": "/tish/"
+}

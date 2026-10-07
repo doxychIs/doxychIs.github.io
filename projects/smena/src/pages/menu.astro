@@ -1,0 +1,10 @@
+---
+import { withBase } from '../lib/urls';
+import Layout from '../layouts/Layout.astro';
+import { services, money, duration } from '../data/catalog';
+const groups = ['Форма', 'Цвет', 'Укладка', 'Дополнить визит'];
+---
+<Layout title="Услуги и цены" description="Стрижки от 2 900 ₽, тонирование от 4 800 ₽, укладки и уход за волосами. Понятное меню услуг студии СМЕНА в Перми.">
+  <div class="page-intro page-pad"><span class="eyebrow">СМЕНА / Меню</span><h1>ТОЧНАЯ РАБОТА.<br /><span>ПОНЯТНЫЙ ПРАЙС.</span></h1><p>Без деления стрижек на «женские» и «мужские». Ориентируемся на форму и сложность работы.</p></div>
+  <div class="price-layout page-pad"><nav class="price-nav" aria-label="Категории услуг">{groups.map((g,i)=><a href={`#group-${i}`}>{g}<span aria-hidden="true">↘</span></a>)}</nav><div>{groups.map((group,i)=><section class="price-group" id={`group-${i}`} aria-labelledby={`title-${i}`}><h2 id={`title-${i}`}><span>0{i+1}</span>{group}</h2>{services.filter(s=>s.group===group).map(s=><div class="price-row"><div><h3>{s.name}</h3><p>{s.note}</p></div><div class="price-value"><strong>{s.group==='Цвет'?'от ':''}{money(s.price)}</strong><span>{duration(s.minutes)}</span></div><a href={withBase(`/visit/?${s.extra?'extra':'service'}=${s.id}`)} aria-label={`Добавить в план: ${s.name}`} class="price-add"><span aria-hidden="true">+</span></a></div>)}</section>)}<p class="price-disclaimer">В окрашивания включены консультация и укладка. Цена указана для длины до плеч; точный расчёт зависит от длины, густоты и исходного цвета. Его согласуем до начала работы.</p></div></div>
+</Layout>
