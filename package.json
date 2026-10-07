@@ -1,0 +1,8 @@
+{
+  "name": "dox-portfolio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "node --check assets/dox/portfolio.js && node --check assets/dox/ink.js && node --check assets/dox/ink-core.js && node --test tests/ink.test.mjs"
+  }
+}
