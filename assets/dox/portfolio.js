@@ -6,7 +6,7 @@ const replay = document.querySelector('#replay-ink');
 const button = document.querySelector('#motion-toggle');
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 let preference;
-try { preference = localStorage.getItem('dox.motion'); } catch {}
+try { preference = localStorage.getItem('dox.motion.v2'); } catch {}
 let moving = preference === 'off' ? false : preference === 'on' ? true : !reduced.matches;
 const scene = canvas && signature && replay ? createInkScene(canvas, signature, replay) : null;
 
@@ -20,7 +20,7 @@ function applyMotion() {
 if (scene) { button.hidden = false; applyMotion(); }
 button.addEventListener('click', () => {
   moving = !moving; preference = moving ? 'on' : 'off';
-  try { localStorage.setItem('dox.motion', preference); } catch {}
+  try { localStorage.setItem('dox.motion.v2', preference); } catch {}
   applyMotion();
 });
 reduced.addEventListener('change', () => { if (!preference) { moving = !reduced.matches; applyMotion(); } });
