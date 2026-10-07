@@ -1,5 +1,4 @@
 import { createInkScene } from './ink.js';
-import { createHeroMorph } from './hero-morph.js';
 
 const canvas = document.querySelector('#ink-field');
 const signature = document.querySelector('#signature');
@@ -10,9 +9,6 @@ let preference;
 try { preference = localStorage.getItem('dox.motion.v2'); } catch {}
 let moving = preference === 'off' ? false : preference === 'on' ? true : !reduced.matches;
 const scene = canvas && signature && replay ? createInkScene(canvas, signature, replay) : null;
-const heroMorphCanvas = document.querySelector('#hero-morph');
-const heroTitle = document.querySelector('#hero-title');
-const heroMorph = heroMorphCanvas && heroTitle ? createHeroMorph(heroMorphCanvas, heroTitle) : null;
 
 function applyMotion() {
   document.documentElement.dataset.motion = moving ? 'on' : 'off';
@@ -20,7 +16,6 @@ function applyMotion() {
   button.setAttribute('aria-label', moving ? 'Анимация включена. Выключить движение.' : 'Анимация выключена. Включить движение.');
   button.querySelector('span').textContent = moving ? 'Движение: вкл' : 'Движение: выкл';
   scene?.setMotion(moving);
-  heroMorph?.setMotion(moving);
 }
 if (scene) { button.hidden = false; applyMotion(); }
 button.addEventListener('click', () => {
@@ -114,8 +109,6 @@ function updateScrollChoreography() {
 
   if (!moving || !hero) {
     root.style.setProperty('--hero-scroll', '0');
-    heroMorph?.setProgress(0);
-    hero?.style.setProperty('--hero-nick-opacity', '0');
     document.querySelectorAll('[data-mask-line]').forEach(line => line.style.setProperty('--mask-pct', '100%'));
     return;
   }
@@ -124,12 +117,6 @@ function updateScrollChoreography() {
   const heroTravel = Math.max(1, Math.min(window.innerHeight * 0.72, hero.offsetHeight * 0.72));
   const progress = Math.min(1, Math.max(0, -heroRect.top / heroTravel));
   root.style.setProperty('--hero-scroll', progress.toFixed(4));
-  heroMorph?.setProgress(progress);
-
-  const nickIn = Math.min(1, Math.max(0, (progress - 0.68) / 0.18));
-  const nickOut = 1 - Math.min(1, Math.max(0, (progress - 0.94) / 0.06));
-  hero?.style.setProperty('--hero-nick-opacity', String(nickIn * nickOut));
-
   const manifesto = document.querySelector('.manifesto');
   if (manifesto) {
     const rect = manifesto.getBoundingClientRect();
