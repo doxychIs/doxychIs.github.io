@@ -64,3 +64,64 @@ if ('IntersectionObserver' in window) {
   }, { rootMargin: '-15% 0px -45% 0px' });
   sections.forEach(section => observer.observe(section));
 }
+
+
+// Awwwards-style scroll choreography: restrained, fast and reversible.
+const root = document.documentElement;
+const hero = document.querySelector('.hero');
+const revealTargets = [
+  document.querySelector('.section-head'),
+  ...projects,
+  document.querySelector('.about-label'),
+  document.querySelector('.about-copy'),
+  document.querySelector('.footer-top')
+].filter(Boolean);
+
+revealTargets.forEach((element, index) => {
+  element.classList.add('scroll-reveal');
+  if (element.classList.contains('project')) element.style.setProperty('--reveal-order', String(index));
+});
+
+let revealObserver;
+if ('IntersectionObserver' in window) {
+  revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -9% 0px', threshold: 0.08 });
+  revealTargets.forEach(element => revealObserver.observe(element));
+} else {
+  revealTargets.forEach(element => element.classList.add('is-visible'));
+}
+root.classList.add('reveal-ready');
+
+let scrollTicking = false;
+function updateScrollChoreography() {
+  scrollTicking = false;
+  const scrollTop = window.scrollY || document.documentElement.scrollTop || 0;
+  const scrollRange = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+  root.style.setProperty('--scroll-progress', String(Math.min(1, Math.max(0, scrollTop / scrollRange))));
+
+  if (!moving || !hero) {
+    root.style.setProperty('--hero-scroll', '0');
+    return;
+  }
+
+  const heroRect = hero.getBoundingClientRect();
+  const heroTravel = Math.max(1, Math.min(window.innerHeight * 0.72, hero.offsetHeight * 0.72));
+  const progress = Math.min(1, Math.max(0, -heroRect.top / heroTravel));
+  root.style.setProperty('--hero-scroll', progress.toFixed(4));
+}
+
+function requestScrollChoreography() {
+  if (scrollTicking) return;
+  scrollTicking = true;
+  requestAnimationFrame(updateScrollChoreography);
+}
+
+window.addEventListener('scroll', requestScrollChoreography, { passive: true });
+window.addEventListener('resize', requestScrollChoreography, { passive: true });
+requestScrollChoreography();
