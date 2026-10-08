@@ -88,7 +88,4 @@
   .mobile-plan-summary:focus-visible{outline-offset:-5px;box-shadow:none}
 }
 
-.editorial-frame{clip-path:inset(0);transition:clip-path .85s cubic-bezier(.2,.75,.25,1)}
-.editorial-waiting{clip-path:inset(0 0 14% 0)}
 @media(hover:hover){#download-plan:hover span{transform:translateY(3px)}}
-@media(prefers-reduced-motion:reduce){.editorial-frame,.editorial-waiting{clip-path:none!important;transition:none!important}}

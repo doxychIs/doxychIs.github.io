@@ -11,7 +11,7 @@ const example = visitTotal('cut', ['care']);
   <section class="campaign" aria-labelledby="campaign-title">
     <div class="campaign-label"><span>Студия волос / Пермь</span><span>Форма. Цвет. Характер.</span></div>
     <h1 id="campaign-title" class="campaign-title">ВЫ — <span>НОВАЯ</span><br />ТОЧКА ОТСЧЁТА.</h1>
-    <div class="campaign-visual"><img src={withBase('/images/collection.jpg')} srcset={withSrcset('/images/collection-small.jpg 900w, /images/collection.jpg 1536w')} sizes="100vw" width="1536" height="1024" alt="Три образа СМЕНЫ: графичное каре, живая текстура и медный цвет" fetchpriority="high" decoding="async" /><span class="campaign-sticker">Свой<br />характер.<small>Без чужих правил.</small></span></div>
+    <div class="campaign-visual"><div class="campaign-image"><img src={withBase('/images/collection.jpg')} srcset={withSrcset('/images/collection-small.jpg 900w, /images/collection.jpg 1536w')} sizes="100vw" width="1536" height="1024" alt="Три образа СМЕНЫ: графичное каре, живая текстура и медный цвет" fetchpriority="high" decoding="async" /></div><span class="campaign-sticker">Свой<br />характер.<small>Без чужих правил.</small></span></div>
     <div class="campaign-bottom"><p>Стрижки, цвет и уход с вниманием к вам.<br />Находим образ, с которым хорошо каждый день.</p><div class="campaign-actions"><a class="button button-dark" href="#services">Выбрать услугу</a><a class="text-link" href={withBase('/obrazy/')}>Найти идею для образа</a></div></div>
     <nav class="home-navigation" aria-label="На этой странице"><span>Знакомство со СМЕНОЙ</span><a href="#services">Услуги и цены</a><a href="#collection">Образы</a><a href="#first-visit">Первый визит</a><a href="#questions">Вопросы</a></nav>
   </section>
