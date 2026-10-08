@@ -7,6 +7,7 @@ import '@fontsource/golos-text/cyrillic-500.css';
 import '@fontsource/golos-text/cyrillic-600.css';
 import '@fontsource/golos-text/latin-400.css';
 import '../styles/site.css';
+import '../styles/refinement.css';
 import config from '../../business.config.json';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -31,6 +32,6 @@ const socialImage = config.siteUrl ? new URL(withBase(image), config.siteUrl).hr
   <body>
     <a class="skip" href="#main">Перейти к содержимому</a>
     <Header /><main id="main"><slot /></main><Footer />
-    <script>import '../scripts/navigation';</script>
+    <script>import '../scripts/navigation'; import '../scripts/editorial';</script>
   </body>
 </html>

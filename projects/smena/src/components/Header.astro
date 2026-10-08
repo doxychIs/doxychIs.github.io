@@ -1,14 +1,15 @@
 ---
+import BrandArrow from './BrandArrow.astro';
 import { withBase } from '../lib/urls';
 const links = [{href:'/obrazy/',name:'Образы'},{href:'/menu/',name:'Услуги и цены'},{href:'/studio/',name:'Студия'}];
 const path = Astro.url.pathname.slice(import.meta.env.BASE_URL.length - 1);
 ---
 <header class="site-header">
-  <a class="wordmark" href={withBase("/")} aria-label="СМЕНА — главная">СМЕНА<span aria-hidden="true">↗</span></a>
+  <a class="wordmark" href={withBase("/")} aria-label="СМЕНА — главная">СМЕНА<BrandArrow /></a>
   <span class="header-location">Студия волос / Пермь</span>
   <button class="menu-toggle" type="button" aria-controls="navigation" aria-expanded="false">Меню <span aria-hidden="true">+</span></button>
   <nav id="navigation" aria-label="Основная навигация">
     {links.map(link => <a href={withBase(link.href)} aria-current={path.startsWith(link.href) ? 'page' : undefined}>{link.name}</a>)}
-    <a class="header-visit" href={withBase("/visit/")} aria-current={path === '/visit/' ? 'page' : undefined}>Собрать визит <span aria-hidden="true">↗</span></a>
+    <a class="header-visit" href={withBase("/visit/")} aria-current={path === '/visit/' ? 'page' : undefined}>План визита</a>
   </nav>
 </header>

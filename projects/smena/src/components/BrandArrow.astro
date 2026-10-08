@@ -1,0 +1,5 @@
+---
+interface Props { class?: string; }
+const { class: className = '' } = Astro.props;
+---
+<svg class={`brand-arrow ${className}`} viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M12 6h30v30h-8V20L13 41l-6-6 21-21H12Z" fill="currentColor" /></svg>

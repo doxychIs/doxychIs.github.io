@@ -17,6 +17,9 @@ test('Ссылка на образ задаёт основную услугу и
   assert.match(doc.querySelector('#ticket-price').textContent,/6\s500/);
   const extra=doc.querySelector('input[value=care]');extra.checked=true;extra.dispatchEvent(new dom.window.Event('change',{bubbles:true}));
   assert.match(doc.querySelector('#ticket-price').textContent,/8\s300/);assert.equal(doc.querySelector('#ticket-duration').textContent,'2 ч 25 мин');
+  assert.equal(doc.querySelector('#mobile-ticket-price').textContent,doc.querySelector('#ticket-price').textContent);
+  assert.equal(doc.querySelector('#mobile-ticket-duration').textContent,doc.querySelector('#ticket-duration').textContent);
+  assert.equal(doc.querySelector('.mobile-plan-summary').hidden,false);
   dom.window.close();
 });
 test('Невалидный запрос не создаёт план; заполненный создаёт только локальный текст',()=>{

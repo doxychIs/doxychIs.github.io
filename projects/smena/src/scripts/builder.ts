@@ -29,9 +29,15 @@ if (form) {
     const total = getTotal();
     list.replaceChildren(...total.items.map(item => { const li = document.createElement('li'); const name = document.createElement('span'); const cost = document.createElement('span'); name.textContent = item.name; cost.textContent = money(item.price); li.append(name,cost); return li; }));
     price.textContent = money(total.price); time.textContent = duration(total.minutes);
+    const mobilePrice = document.querySelector<HTMLElement>('#mobile-ticket-price');
+    const mobileTime = document.querySelector<HTMLElement>('#mobile-ticket-duration');
+    if (mobilePrice) mobilePrice.textContent = money(total.price);
+    if (mobileTime) mobileTime.textContent = duration(total.minutes);
     if (announce) status.textContent = `План обновлён. ${money(total.price)}, ${duration(total.minutes)}.`;
     result.hidden = true;
   }
+  const mobileSummary = document.querySelector<HTMLElement>('.mobile-plan-summary');
+  if (mobileSummary) mobileSummary.hidden = false;
   update(false);
   form.addEventListener('change', e => { if (['service','extra'].includes((e.target as HTMLInputElement).name)) update(); else result.hidden = true; });
   form.addEventListener('input', e => { result.hidden = true; (e.target as HTMLInputElement).setCustomValidity?.(''); });

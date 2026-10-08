@@ -5,6 +5,6 @@ interface Props { look: typeof looks[number]; }
 const { look } = Astro.props;
 ---
 <a class="look-card" href={withBase(`/obrazy/${look.slug}/`)}>
-  <div class="look-photo"><img src={withBase(`/images/${look.image}.webp`)} srcset={withSrcset(`/images/${look.image}-small.webp 320w, /images/${look.image}.webp 512w`)} sizes="(max-width: 650px) 90vw, 32vw" width="512" height="1024" loading="lazy" decoding="async" alt={look.alt} /><span class="look-number">/{look.number}</span><span class="look-arrow" aria-hidden="true">↗</span></div>
+  <div class="look-photo"><img src={withBase(`/images/${look.image}.webp`)} srcset={withSrcset(`/images/${look.image}-small.webp 320w, /images/${look.image}.webp 512w`)} sizes="(max-width: 650px) 90vw, 32vw" width="512" height="1024" loading="lazy" decoding="async" alt={look.alt} /><span class="look-number">/{look.number}</span><span class="look-label" aria-hidden="true">Подробнее об образе</span></div>
   <div class="look-meta"><h3>{look.title}</h3><span>{look.tag}</span></div>
 </a>

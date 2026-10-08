@@ -1,9 +1,10 @@
 ---
+import BrandArrow from './BrandArrow.astro';
 import { withBase } from '../lib/urls';
 import config from '../../business.config.json';
 ---
 <footer class="site-footer">
-  <div class="footer-top"><p>Следующая глава<br />начинается с вас.</p><a class="circle-link" href={withBase("/visit/")} aria-label="Собрать свой визит"><span aria-hidden="true">↗</span></a></div>
-  <a class="footer-brand" href={withBase("/")} aria-label="СМЕНА — на главную">СМЕНА<span aria-hidden="true">↗</span></a>
+  <div class="footer-top"><p>Следующая глава<br />начинается с вас.</p><a class="button button-light" href={withBase("/visit/")}>Составить план визита</a></div>
+  <a class="footer-brand" href={withBase("/")} aria-label="СМЕНА — на главную">СМЕНА<BrandArrow /></a>
   <div class="footer-bottom"><span>{config.city} · {config.hours}</span><div>{config.phone && <a href={`tel:${config.phone.replace(/[^+\d]/g,'')}`}>{config.phone}</a>}{config.email && <a href={`mailto:${config.email}`}>{config.email}</a>}<a href={withBase("/privacy/")}>Конфиденциальность</a><span>© {new Date().getFullYear()} СМЕНА</span></div></div>
 </footer>
