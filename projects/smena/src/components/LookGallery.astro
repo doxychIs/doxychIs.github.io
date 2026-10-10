@@ -1,0 +1,29 @@
+---
+import { withBase, withSrcset } from '../lib/urls';
+import { looks } from '../data/catalog';
+import { lookViews } from '../data/look-views';
+interface Props { look: typeof looks[number]; }
+const { look } = Astro.props;
+const views = lookViews(look);
+---
+<section class={`look-gallery gallery-${look.slug}`} data-look-gallery aria-label={`Ракурсы образа «${look.title}»`}>
+  <div class="gallery-stage" tabindex="0" role="group" aria-label="Фотографии образа. Используйте кнопки ракурсов или клавиши влево и вправо.">
+    {views.map((view, i) => <picture class:list={['gallery-slide', { 'is-current': i === 0 }]} data-slide data-label={view.label} aria-hidden={i !== 0}>
+      <img src={withBase(`/images/${view.image}.webp`)} srcset={withSrcset(`/images/${view.image}-small.webp 320w, /images/${view.image}.webp ${view.width}w`)} sizes="(max-width: 650px) 100vw, 50vw" width={view.width} height={view.width * 2} alt={view.alt} fetchpriority={i === 0 ? 'high' : 'auto'} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
+    </picture>)}
+    <div class="gallery-topline" aria-hidden="true"><span>СМЕНА / ОБРАЗ {look.number}</span><span>СЪЁМКА В ТРЁХ РАКУРСАХ</span></div>
+    <div class="gallery-frame-label" aria-hidden="true"><span data-view-number>01</span><span data-view-label>Портрет</span></div>
+    <div class="gallery-step-controls" hidden><button type="button" data-step="-1" aria-label="Предыдущий ракурс"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5-7 7 7 7" /></svg></button><button type="button" data-step="1" aria-label="Следующий ракурс"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 5 7 7-7 7" /></svg></button></div>
+  </div>
+  <div class="gallery-panel">
+    <div class="gallery-panel-head"><span>РАССМОТРЕТЬ ОБРАЗ</span><span class="gallery-hint">Выберите ракурс</span></div>
+    <div class="gallery-views" role="group" aria-label="Выбор ракурса">
+      {views.map((view, i) => <button type="button" class="gallery-view" data-view={i} aria-pressed={i === 0} aria-label={`Показать ракурс: ${view.label}`}>
+        <span class="gallery-thumb"><img src={withBase(`/images/${view.image}-small.webp`)} width="320" height="640" loading="lazy" decoding="async" alt={`${look.title} — ${view.label.toLowerCase()}`} /></span><span class="gallery-view-name"><small>0{i + 1}</small>{view.label}</span>
+      </button>)}
+    </div>
+    <span class="sr-only" data-gallery-status aria-live="polite" aria-atomic="true"></span>
+    <noscript><p class="gallery-no-js">Другие ракурсы: {views.slice(1).map(view => <a href={withBase(`/images/${view.image}.webp`)}>{view.label}</a>)}</p></noscript>
+  </div>
+</section>
+<script>import '../scripts/look-gallery';</script>

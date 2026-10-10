@@ -1,10 +1,16 @@
 ---
 import { withBase, withSrcset } from '../lib/urls';
 import { looks } from '../data/catalog';
+import { lookViews } from '../data/look-views';
 interface Props { look: typeof looks[number]; }
 const { look } = Astro.props;
+const views = lookViews(look);
 ---
-<a class="look-card" href={withBase(`/obrazy/${look.slug}/`)}>
-  <div class="look-photo"><img src={withBase(`/images/${look.image}.webp`)} srcset={withSrcset(`/images/${look.image}-small.webp 320w, /images/${look.image}.webp 512w`)} sizes="(max-width: 650px) 90vw, 32vw" width="512" height="1024" loading="lazy" decoding="async" alt={look.alt} /><span class="look-number">/{look.number}</span><span class="look-label" aria-hidden="true">Подробнее об образе</span></div>
+<a class="look-card" href={withBase(`/obrazy/${look.slug}/`)} aria-label={`Рассмотреть образ «${look.title}» в трёх ракурсах`}>
+  <div class="look-photo" data-look-preview>
+    {views.map((view, i) => <picture class:list={['look-preview-slide', { 'is-current': i === 0 }]} data-slide aria-hidden={i !== 0}><img src={withBase(`/images/${view.image}.webp`)} srcset={withSrcset(`/images/${view.image}-small.webp 320w, /images/${view.image}.webp ${view.width}w`)} sizes="(max-width: 650px) 90vw, 32vw" width={view.width} height={view.width * 2} loading="lazy" decoding="async" alt={view.alt} /></picture>)}
+    <span class="look-number">/{look.number}</span><span class="look-view-count" aria-hidden="true">3 ракурса</span><span class="look-preview-rail" aria-hidden="true">{views.map((_,i) => <i class:list={{'is-current': i === 0}} data-preview-marker />)}</span><span class="look-label" aria-hidden="true">Рассмотреть образ</span>
+  </div>
   <div class="look-meta"><h3>{look.title}</h3><span>{look.tag}</span></div>
 </a>
+<script>import '../scripts/look-gallery';</script>

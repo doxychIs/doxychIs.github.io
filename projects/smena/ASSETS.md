@@ -1,5 +1,58 @@
 # Изображения и шрифты
 
+## Ракурсы коллекции — 10 октября 2026
+
+Для каждого из трёх существующих образов встроенный ImageGen создал отдельные кадры профиля и вида сзади. Исходные портреты сохранены. Новые кадры используют исходный портрет как референс лица, причёски, одежды, фона и освещения. Это продолжение редакционной съёмки для портфолио, не документальный результат услуги. WebP: 768 × 1536 и 320 × 640 px.
+
+### line-profile
+
+Файлы: `public/images/line-profile.webp`, `public/images/line-profile-small.webp`.
+
+```text
+Use case: identity-preserve. Asset type: editorial hairstyle photograph for the existing Russian hair studio SMENA, one single portrait frame. Input image 1: identity and hairstyle reference, preserve the exact model. Primary request: Create a new photograph of the SAME adult woman with the SAME straight jet-black chin-length blunt bob, exact short straight fringe, red lipstick, black sculptural top, red backdrop, photographed in the same photo session. Change ONLY camera angle and natural pose. Strict side-profile view, model facing left, show the complete side silhouette of the hairstyle and nose profile, eyes looking ahead. Photorealistic fashion editorial, realistic skin texture, individual hair strands, same studio lighting and background color as reference. Vertical 1:2 portrait composition, head and upper torso, leave comfortable space around entire haircut, no cropped top of head. Preserve facial identity, age, ethnicity, hair color, exact hair length, texture, fringe/part, clothing and styling; no new accessories. Not a collage, not a before-and-after, no typography, no logos, no watermark.
+```
+
+### line-back
+
+Файлы: `public/images/line-back.webp`, `public/images/line-back-small.webp`.
+
+```text
+Use case: identity-preserve. Asset type: editorial hairstyle photograph for the existing Russian hair studio SMENA, one single portrait frame. Input image 1: identity and hairstyle reference, preserve the exact model. Primary request: Create a new photograph of the SAME adult woman with the SAME straight jet-black chin-length blunt bob, exact short straight fringe, red lipstick, black sculptural top, red backdrop, photographed in the same photo session. Change ONLY camera angle and natural pose. Back three-quarter view, photographed from behind with head only very slightly turned, face mostly hidden, show the back of the head, full nape and haircut contour. Photorealistic fashion editorial, realistic skin texture, individual hair strands, same studio lighting and background color as reference. Vertical 1:2 portrait composition, head and upper torso, leave comfortable space around entire haircut, no cropped top of head. Preserve facial identity, age, ethnicity, hair color, exact hair length, texture, fringe/part, clothing and styling; no new accessories. Not a collage, not a before-and-after, no typography, no logos, no watermark.
+```
+
+### texture-profile
+
+Файлы: `public/images/texture-profile.webp`, `public/images/texture-profile-small.webp`.
+
+```text
+Use case: identity-preserve. Asset type: editorial hairstyle photograph for the existing Russian hair studio SMENA, one single portrait frame. Input image 1: identity and hairstyle reference, preserve the exact model. Primary request: Create a new photograph of the SAME adult brunette woman with the SAME shoulder-length wavy layered dark-brown hair, natural makeup, black square-neck tank top, off-white backdrop, photographed in the same photo session. Change ONLY camera angle and natural pose. Strict side-profile view, model facing left, show the complete side silhouette of the hairstyle and nose profile, eyes looking ahead. Photorealistic fashion editorial, realistic skin texture, individual hair strands, same studio lighting and background color as reference. Vertical 1:2 portrait composition, head and upper torso, leave comfortable space around entire haircut, no cropped top of head. Preserve facial identity, age, ethnicity, hair color, exact hair length, texture, fringe/part, clothing and styling; no new accessories. Not a collage, not a before-and-after, no typography, no logos, no watermark.
+```
+
+### texture-back
+
+Файлы: `public/images/texture-back.webp`, `public/images/texture-back-small.webp`.
+
+```text
+Use case: identity-preserve. Asset type: editorial hairstyle photograph for the existing Russian hair studio SMENA, one single portrait frame. Input image 1: identity and hairstyle reference, preserve the exact model. Primary request: Create a new photograph of the SAME adult brunette woman with the SAME shoulder-length wavy layered dark-brown hair, natural makeup, black square-neck tank top, off-white backdrop, photographed in the same photo session. Change ONLY camera angle and natural pose. Back three-quarter view, photographed from behind with head only very slightly turned, face mostly hidden, show the back of the head, full nape and haircut contour. Photorealistic fashion editorial, realistic skin texture, individual hair strands, same studio lighting and background color as reference. Vertical 1:2 portrait composition, head and upper torso, leave comfortable space around entire haircut, no cropped top of head. Preserve facial identity, age, ethnicity, hair color, exact hair length, texture, fringe/part, clothing and styling; no new accessories. Not a collage, not a before-and-after, no typography, no logos, no watermark.
+```
+
+### copper-profile
+
+Файлы: `public/images/copper-profile.webp`, `public/images/copper-profile-small.webp`.
+
+```text
+Use case: identity-preserve. Asset type: editorial hairstyle photograph for the existing Russian hair studio SMENA, one single portrait frame. Input image 1: identity and hairstyle reference, preserve the exact model. Primary request: Create a new photograph of the SAME adult freckled woman with the SAME copper chin-length bob, side part, muted-plum high-neck top, charcoal backdrop, photographed in the same photo session. Change ONLY camera angle and natural pose. Strict side-profile view, model facing left, show the complete side silhouette of the hairstyle and nose profile, eyes looking ahead. Photorealistic fashion editorial, realistic skin texture, individual hair strands, same studio lighting and background color as reference. Vertical 1:2 portrait composition, head and upper torso, leave comfortable space around entire haircut, no cropped top of head. Preserve facial identity, age, ethnicity, hair color, exact hair length, texture, fringe/part, clothing and styling; no new accessories. Not a collage, not a before-and-after, no typography, no logos, no watermark.
+```
+
+### copper-back
+
+Файлы: `public/images/copper-back.webp`, `public/images/copper-back-small.webp`.
+
+```text
+Use case: identity-preserve. Asset type: editorial hairstyle photograph for the existing Russian hair studio SMENA, one single portrait frame. Input image 1: identity and hairstyle reference, preserve the exact model. Primary request: Create a new photograph of the SAME adult freckled woman with the SAME copper chin-length bob, side part, muted-plum high-neck top, charcoal backdrop, photographed in the same photo session. Change ONLY camera angle and natural pose. Back three-quarter view, photographed from behind with head only very slightly turned, face mostly hidden, show the back of the head, full nape and haircut contour. Photorealistic fashion editorial, realistic skin texture, individual hair strands, same studio lighting and background color as reference. Vertical 1:2 portrait composition, head and upper torso, leave comfortable space around entire haircut, no cropped top of head. Preserve facial identity, age, ethnicity, hair color, exact hair length, texture, fringe/part, clothing and styling; no new accessories. Not a collage, not a before-and-after, no typography, no logos, no watermark.
+```
+
+
 Фотографии созданы встроенным ImageGen для этого проекта. Это редакционные изображения, а не фотографии реальных клиентов или подтверждённые результаты салона. Изображения AURA не использовались.
 
 Файлы: `public/images/collection.jpg`, `collection-small.jpg`; отдельные портреты `line.webp`, `texture.webp`, `copper.webp` и их уменьшенные варианты. Для сайта сделаны техническое разделение триптиха, сжатие JPEG/WebP и уменьшение размеров. Все файлы локальные.
