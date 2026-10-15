@@ -35,7 +35,7 @@ filters.forEach(filter => filter.addEventListener('click', () => {
   projects.forEach(project => { project.hidden = value !== 'all' && project.dataset.kind !== value; });
   const visible = projects.filter(project => !project.hidden).length;
   document.querySelector('#project-count').textContent = String(visible).padStart(2, '0');
-  document.querySelector('#filter-status').textContent = value === 'all' ? 'Показаны все четыре проекта.' : value === 'sites' ? 'Показаны три сайта.' : 'Показана одна игра.';
+  document.querySelector('#filter-status').textContent = `Показано проектов: ${visible}.`;
 }));
 
 const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
