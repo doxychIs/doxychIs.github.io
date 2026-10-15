@@ -3,15 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#101113">
-  <meta name="description" content="Начните с маленького гаража и постройте промышленную империю. ЦЕХ — тайкун о больших идеях и огромном производстве.">
+  <meta name="theme-color" content="#81cde1">
+  <meta name="description" content="Начните с маленького гаража и постройте промышленную империю. 86 ЦЕХ — красочная игра о больших идеях, команде и забавных роботах.">
   <meta name="yandex-games" content="disabled">
-  <title>ЦЕХ — от гаража до звёзд</title>
+  <title>86 ЦЕХ — мир изобретателей 3.1</title>
+  <link rel="preload" as="image" href="./assets/locations/garage.webp">
   <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
   <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./expansion.css">
+  <link rel="stylesheet" href="./game.css">
+  <link rel="stylesheet" href="./focus.css">
   <script type="module" src="./src/main.js"></script>
 </head>
-<body>
+<body data-location="factory" data-era="0">
+  <div class="world-backdrop" aria-hidden="true"><div class="world-layer active" style="background-image:url('./assets/locations/garage.webp')"></div><div class="world-layer"></div><div class="world-shade"></div><div class="world-motes"></div></div>
+  <div class="travel-curtain" aria-hidden="true"><span>ОТПРАВЛЯЕМСЯ</span><strong id="travel-name"></strong></div>
   <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <symbol id="i-factory" viewBox="0 0 24 24"><path d="M3 21V10l6 3V8l7 4V3h4v18Z"/><path d="M6 17h1m4 0h1m4 0h1M16 6h4"/></symbol>
     <symbol id="i-worker" viewBox="0 0 24 24"><path d="M5 9h14M7 9V7a5 5 0 0 1 10 0v2M12 2v4M8 11a4 4 0 0 0 8 0M4 21v-2c0-3 3-5 8-5s8 2 8 5v2M9 15v6m6-6v6"/></symbol>
@@ -36,12 +42,12 @@
     <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10h.01"/></symbol>
   </svg>
 
-  <div id="loading" class="loading-screen"><span class="loading-logo">Ц</span><p>Разогреваем производство…</p></div>
-  <noscript><p class="noscript">Чтобы запустить «ЦЕХ», включите JavaScript в браузере.</p></noscript>
+  <div id="loading" class="loading-screen"><span class="loading-logo">86</span><p>Разогреваем производство…</p></div>
+  <noscript><p class="noscript">Чтобы запустить «86 ЦЕХ», включите JavaScript в браузере.</p></noscript>
 
   <div class="app-shell" id="app" aria-busy="true">
     <header class="header">
-      <a class="brand" href="./" aria-label="ЦЕХ — главная"><span class="brand-mark"><svg class="icon"><use href="#i-factory"/></svg></span><span class="brand-name">ЦЕХ<span class="brand-caption">ОТ ГАРАЖА ДО ЗВЁЗД</span></span></a>
+      <a class="brand" href="./" aria-label="86 ЦЕХ — главная"><span class="brand-mark"><svg class="icon"><use href="#i-factory"/></svg></span><span class="brand-name">86 ЦЕХ<span class="brand-caption">ВЕРСИЯ 3.1</span></span></a>
       <div class="header-tools">
         <span class="save-status" id="save-status"><span class="status-dot"></span><span id="save-label">Автосохранение</span></span>
         <span class="header-divider"></span>
@@ -51,27 +57,49 @@
     </header>
 
     <main>
+      <div class="edition-badge"><strong>3.1</strong><span>Мир изобретателей</span></div>
       <section class="economy-bar" aria-label="Экономика империи">
-        <div class="balance-block"><span class="eyebrow">КАПИТАЛ ИМПЕРИИ</span><div class="balance"><span id="money">0</span><span class="currency">₽</span></div><span class="balance-caption">Каждая большая империя начинается с первого рубля.</span></div>
-        <div class="metric-block"><span class="metric-icon"><svg class="icon"><use href="#i-stats"/></svg></span><div><span class="metric-label">Пассивный доход</span><strong id="income">0 ₽<span class="metric-unit"> / сек</span></strong><span class="metric-note">Производство работает за вас</span></div></div>
-        <div class="metric-block click-metric"><span class="metric-icon orange"><svg class="icon"><use href="#i-bolt"/></svg></span><div><span class="metric-label">Ручное производство</span><strong id="click-income">1 ₽<span class="metric-unit"> / нажатие</span></strong><span class="metric-note">Растёт вместе с производством</span></div></div>
+        <div class="balance-block"><span class="eyebrow">КАПИТАЛ ИМПЕРИИ</span><div class="balance"><span id="money">0</span><span class="currency">DOX</span></div><span class="balance-caption">Каждая большая империя начинается с первого DOX Coin.</span></div>
+        <div class="metric-block"><span class="metric-icon"><svg class="icon"><use href="#i-stats"/></svg></span><div><span class="metric-label">Пассивный доход</span><strong id="income">0 DOX<span class="metric-unit"> / сек</span></strong><span class="metric-note">Производство работает за вас</span></div></div>
+        <div class="metric-block click-metric"><span class="metric-icon orange"><svg class="icon"><use href="#i-bolt"/></svg></span><div><span class="metric-label">Ручное производство</span><strong id="click-income">1 DOX<span class="metric-unit"> / нажатие</span></strong><span class="metric-note">Растёт вместе с производством</span></div></div>
       </section>
 
-      <section class="journey" aria-label="Путь развития империи"><div class="journey-track" id="journey-track"></div></section>
 
-      <div class="game-layout">
-        <section class="production-panel panel" aria-label="Ручное производство">
-          <div class="stage-top"><span class="stage-badge" id="stage-badge">ЭТАП 01 / 07</span><span class="live-badge"><span class="status-dot"></span>В работе</span></div>
-          <h1 id="stage-headline">Большое дело.<br>Маленький гараж.</h1>
-          <p class="stage-description" id="stage-description">Один верстак, смелая идея и целая империя впереди.</p>
-          <div class="scene" id="scene" aria-label="Ваше производство"><div id="scene-art"></div><div class="scene-caption"><span class="scene-coordinate">УЧАСТОК 001</span><span id="scene-label">Гаражная мастерская</span></div></div>
-          <div class="produce-wrap" id="produce-wrap"><button class="produce-button" id="produce-button"><svg class="icon"><use href="#i-bolt"/></svg><span>Произвести<span id="produce-value">+1 ₽ за нажатие</span></span><svg class="icon produce-arrow"><use href="#i-arrow"/></svg></button></div>
-          <p class="key-hint"><span class="key">ПРОБЕЛ</span><span class="desktop-hint">или нажмите на кнопку</span><span class="mobile-hint">Каждое нажатие приносит доход</span></p>
-          <div class="next-stage"><div><span class="eyebrow" id="next-stage-label">СЛЕДУЮЩИЙ ЭТАП</span><strong id="next-stage-name">Мастерская</strong><span id="next-stage-amount">0 / 12 тыс. ₽ заработано</span></div><div class="progress-track" role="progressbar" id="stage-progress" aria-label="Прогресс до следующего этапа" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="stage-progress-fill"></span></div></div>
+      <nav class="expansion-nav" aria-label="Перемещение по локациям">
+        <button class="selected" data-view="factory"><svg class="icon"><use href="#i-workshop"/></svg><span>Производство</span></button>
+        <button data-view="robots"><svg class="icon"><use href="#i-tool"/></svg><span>Робомастерская</span><b id="inventory-indicator">0</b></button>
+        <button data-view="characters"><svg class="icon"><use href="#i-worker"/></svg><span>Команда</span></button>
+        <button data-view="battles"><svg class="icon"><use href="#i-bolt"/></svg><span>Арена</span></button>
+        <button data-view="achievements"><svg class="icon"><use href="#i-check"/></svg><span>Достижения</span></button>
+      </nav>
+      <div class="location-banner"><span id="location-icon" class="location-symbol"></span><div><span class="eyebrow">ВАША ЛОКАЦИЯ</span><h2 id="location-name">Солнечный гараж</h2><p id="location-subtitle">Здесь начинаются большие идеи</p></div><button class="location-help" data-open-help="current" aria-label="Подсказка о локации">?</button></div>
+      <div class="resource-strip" id="resource-strip" hidden></div>
+      <div class="game-layout" id="factory-view">
+        <section class="production-panel" aria-label="Кликер">
+          <div class="clicker-stage"><button type="button" id="robot-companion" class="robot-companion" aria-label="Собрать DOX нажатием на робота"></button></div>
+          <div class="produce-wrap" id="produce-wrap"><button class="produce-button" id="produce-button"><svg class="icon"><use href="#i-bolt"/></svg><span>Собрать DOX<span id="produce-value">+1 DOX за нажатие</span></span><svg class="icon produce-arrow"><use href="#i-arrow"/></svg></button></div>
+          <p class="key-hint"><span class="key">ПРОБЕЛ</span><span>или нажмите на кнопку</span></p>
+          <div class="quick-actions" aria-label="Действия фабрики">
+            <button class="quick-action" data-open-management="buildings"><svg class="icon"><use href="#i-factory"/></svg><span>Строить</span></button>
+            <button class="quick-action" data-open-management="upgrades"><svg class="icon"><use href="#i-bolt"/></svg><span>Улучшения</span><b id="quick-upgrade-count" hidden>0</b></button>
+            <button class="quick-action" data-open-dialog="progress-dialog"><svg class="icon"><use href="#i-stats"/></svg><span>Мой путь</span></button>
+          </div>
         </section>
+      </div>
+      <div id="expansion-panels">
+        <section id="robots-view" class="expansion-view" hidden></section>
+        <section id="characters-view" class="expansion-view" hidden></section>
+        <section id="battles-view" class="expansion-view" hidden></section>
+        <section id="achievements-view" class="expansion-view" hidden></section>
+      </div>
+      <footer class="footer"><span>86 ЦЕХ 3.1 · Робомастерская · Команда · Арена</span><span><span class="status-dot"></span>Доход в ваше отсутствие · до 8 часов</span></footer>
+    </main>
+  </div>
 
+  <dialog id="management-dialog" class="modal management-dialog" aria-labelledby="management-title">
+    <div class="modal-top"><h2 id="management-title">Моя фабрика</h2><button class="icon-button" data-close="management-dialog" aria-label="Закрыть фабрику"><svg class="icon"><use href="#i-close"/></svg></button></div>
         <section class="management-panel panel" aria-label="Управление империей">
-          <div class="management-heading"><div><span class="eyebrow">РАСТИТЕ. СТРОЙТЕ. ЗАРАБАТЫВАЙТЕ.</span><h2>Ваша империя</h2></div><span class="capacity-badge" id="capacity">0 объектов</span></div>
+          <div class="management-heading"><div><span class="eyebrow">РАСТИТЕ. СТРОЙТЕ. ЗАРАБАТЫВАЙТЕ.</span><h2>Строим и улучшаем</h2></div><span class="capacity-badge" id="capacity">0 объектов</span></div>
           <div class="tabs" role="tablist" aria-label="Разделы управления">
             <button class="tab active" id="tab-buildings" role="tab" aria-selected="true" aria-controls="view-buildings" data-tab="buildings"><svg class="icon"><use href="#i-factory"/></svg>Производство</button>
             <button class="tab" id="tab-upgrades" role="tab" aria-selected="false" aria-controls="view-upgrades" data-tab="upgrades" tabindex="-1"><svg class="icon"><use href="#i-bolt"/></svg>Улучшения<span class="tab-count" id="upgrade-count">0</span></button>
@@ -82,18 +110,28 @@
             <div class="building-list" id="building-list"></div>
             <div class="list-footnote"><svg class="icon"><use href="#i-info"/></svg><span>Каждая покупка увеличивает цену. Доход остаётся с вами.</span></div>
           </div>
-          <div id="view-upgrades" role="tabpanel" aria-labelledby="tab-upgrades" hidden><div class="upgrade-intro">Новые технологии. Больше дохода с каждого объекта.</div><div class="upgrade-list" id="upgrade-list"></div></div>
-          <div id="view-stats" role="tabpanel" aria-labelledby="tab-stats" hidden><div class="stats-grid" id="stats-grid"></div><div class="stats-note"><svg class="icon"><use href="#i-planet"/></svg><div><strong>От одного верстака до целой планеты</strong><p>Открывайте новые этапы, зарабатывая рубли. Потраченные деньги тоже учитываются в развитии.</p></div></div></div>
+          <div id="view-upgrades" role="tabpanel" aria-labelledby="tab-upgrades" hidden><div class="upgrade-intro">Новые технологии. Больше дохода с каждого объекта.</div><div class="industrial-research" id="industrial-research"></div><div class="upgrade-list" id="upgrade-list"></div><div class="prestige-card" id="prestige-card"></div></div>
+          <div id="view-stats" role="tabpanel" aria-labelledby="tab-stats" hidden><div class="stats-grid" id="stats-grid"></div><div class="stats-note"><svg class="icon"><use href="#i-planet"/></svg><div><strong>От одного верстака до целой планеты</strong><p>Развивайте производство и побеждайте боссов для открытия эпох. Потраченные DOX Coin тоже учитываются в развитии.</p></div></div></div>
         </section>
-      </div>
-      <footer class="footer"><span>Маленькие шаги. Большая индустрия.</span><span><span class="status-dot"></span>Доход в ваше отсутствие · до 8 часов</span></footer>
-    </main>
-  </div>
-
+  </dialog>
+  <dialog id="progress-dialog" class="modal progress-dialog" aria-labelledby="progress-title">
+    <div class="modal-top"><h2 id="progress-title">Мой путь</h2><button class="icon-button" data-close="progress-dialog" aria-label="Закрыть подробности"><svg class="icon"><use href="#i-close"/></svg></button></div>
+    <section class="progress-story"><div class="stage-top"><span class="stage-badge" id="stage-badge">ЭТАП 01 / 07</span><span class="live-badge"><span class="status-dot"></span>В работе</span></div>
+          <h1 id="stage-headline">Большое дело.<br>Маленький гараж.</h1>
+          <p class="stage-description" id="stage-description">Один верстак, смелая идея и целая империя впереди.</p><div class="scene" id="scene" aria-label="Ваше производство"><div id="scene-art"></div><div class="scene-caption"><span class="scene-coordinate">УЧАСТОК 001</span><span id="scene-label">Гаражная мастерская</span></div></div></section>
+    <div class="next-stage"><div><span class="eyebrow" id="next-stage-label">СЛЕДУЮЩИЙ ЭТАП</span><strong id="next-stage-name">Мастерская</strong><span id="next-stage-amount">0 / 12 тыс. DOX заработано</span></div><div class="progress-track" role="progressbar" id="stage-progress" aria-label="Прогресс до следующего этапа" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="stage-progress-fill"></span></div></div>
+    <section class="journey" aria-label="Путь развития империи"><div class="journey-track" id="journey-track"></div></section>
+    <div class="connected-quest" id="connected-quest"></div>
+  </dialog>
+  <dialog id="help-dialog" class="modal help-dialog" aria-labelledby="help-title">
+    <div class="modal-top"><h2 id="help-title">Как играть</h2><button class="icon-button" data-close="help-dialog" aria-label="Закрыть подсказку"><svg class="icon"><use href="#i-close"/></svg></button></div><div id="help-content"></div>
+  </dialog>
   <div class="toast-stack" id="toasts" role="status" aria-live="polite" aria-atomic="false"></div>
-  <div class="mobile-production" id="mobile-production" hidden><span>Империя в ваших руках</span><button id="mobile-produce-button"><svg class="icon" aria-hidden="true"><use href="#i-bolt"/></svg><span>Произвести <b id="mobile-produce-value">+1 ₽</b></span></button></div>
+  <div class="mobile-production" id="mobile-production" hidden><span>Империя в ваших руках</span><button id="mobile-produce-button"><svg class="icon" aria-hidden="true"><use href="#i-bolt"/></svg><span>Произвести <b id="mobile-produce-value">+1 DOX</b></span></button></div>
   <dialog id="settings-dialog" class="modal" aria-labelledby="settings-title"><div class="modal-top"><span class="eyebrow">ВАША ИМПЕРИЯ, ВАШИ ПРАВИЛА</span><button class="icon-button" data-close="settings-dialog" aria-label="Закрыть настройки"><svg class="icon"><use href="#i-close"/></svg></button></div><h2 id="settings-title">Настройки</h2><div class="settings-row"><div><strong>Звуки производства</strong><p>Мягкие звуки нажатий и покупок</p></div><button class="toggle" id="sound-toggle" role="switch" aria-checked="false" aria-label="Звуки производства"><span></span></button></div><div class="settings-row"><div><strong>Меньше анимации</strong><p>Спокойный интерфейс без вспышек</p></div><button class="toggle" id="motion-toggle" role="switch" aria-checked="false" aria-label="Меньше анимации"><span></span></button></div><div class="save-explanation"><svg class="icon"><use href="#i-save"/></svg><div><strong>Сохранение на устройстве</strong><p>Прогресс сохраняется каждые 15 секунд и после покупок. Не очищайте данные сайта, чтобы сохранить империю.</p></div></div><button class="secondary-button full-width" id="save-button"><svg class="icon"><use href="#i-save"/></svg>Сохранить сейчас</button><button class="danger-button" id="reset-button">Начать заново</button></dialog>
-  <dialog id="reset-dialog" class="modal" aria-labelledby="reset-title"><div class="modal-top"><span class="eyebrow">НОВАЯ ИСТОРИЯ</span><button class="icon-button" data-close="reset-dialog" aria-label="Отменить сброс"><svg class="icon"><use href="#i-close"/></svg></button></div><h2 id="reset-title">Начать с чистого листа?</h2><p class="modal-copy">Деньги, производства и улучшения будут удалены. Вы снова окажетесь в маленьком гараже. Это действие нельзя отменить.</p><div class="modal-actions"><button class="secondary-button" id="cancel-reset">Оставить империю</button><button class="primary-button danger" id="confirm-reset">Удалить прогресс</button></div></dialog>
-  <dialog id="offline-dialog" class="modal offline-modal" aria-labelledby="offline-title"><span class="offline-icon"><svg class="icon"><use href="#i-factory"/></svg></span><span class="eyebrow">ПРОИЗВОДСТВО НЕ ОСТАНАВЛИВАЛОСЬ</span><h2 id="offline-title">С возвращением!</h2><p class="modal-copy" id="offline-time">Пока вас не было, империя работала.</p><div class="offline-amount" id="offline-amount">+0 ₽</div><p class="offline-note">Доход уже добавлен к вашему капиталу.</p><button class="primary-button full-width" data-close="offline-dialog">Продолжить строить<svg class="icon"><use href="#i-arrow"/></svg></button></dialog>
+  <dialog id="reset-dialog" class="modal" aria-labelledby="reset-title"><div class="modal-top"><span class="eyebrow">НОВАЯ ИСТОРИЯ</span><button class="icon-button" data-close="reset-dialog" aria-label="Отменить сброс"><svg class="icon"><use href="#i-close"/></svg></button></div><h2 id="reset-title">Начать с чистого листа?</h2><p class="modal-copy">Все деньги, производства, роботы, детали и персонажи будут удалены. Вы снова окажетесь в маленьком гараже. Это действие нельзя отменить.</p><div class="modal-actions"><button class="secondary-button" id="cancel-reset">Оставить империю</button><button class="primary-button danger" id="confirm-reset">Удалить прогресс</button></div></dialog>
+  <dialog id="offline-dialog" class="modal offline-modal" aria-labelledby="offline-title"><span class="offline-icon"><svg class="icon"><use href="#i-factory"/></svg></span><span class="eyebrow">ПРОИЗВОДСТВО НЕ ОСТАНАВЛИВАЛОСЬ</span><h2 id="offline-title">С возвращением!</h2><p class="modal-copy" id="offline-time">Пока вас не было, империя работала.</p><div class="offline-amount" id="offline-amount">+0 DOX</div><p class="offline-note">Доход уже добавлен к вашему капиталу.</p><button class="primary-button full-width" data-close="offline-dialog">Продолжить строить<svg class="icon"><use href="#i-arrow"/></svg></button></dialog>
+<dialog class="modal reveal-modal" id="reveal-dialog" aria-labelledby="reveal-title"><div id="reveal-content"></div><button class="primary-button full-width" id="reveal-close">Отлично!</button></dialog>
+  <dialog class="modal prestige-modal" id="prestige-dialog" aria-labelledby="prestige-title"><h2 id="prestige-title">Новая индустриальная глава</h2><p class="modal-copy">Производство, деньги и победы текущего цикла начнутся заново. Детали, робот, команда и ценные ресурсы останутся с вами. Ядра DOX навсегда ускорят пассивный доход.</p><p id="prestige-gain"></p><div class="modal-actions"><button class="secondary-button" id="prestige-cancel">Остаться</button><button class="primary-button" id="prestige-confirm">Начать новый цикл</button></div></dialog>
 </body>
 </html>

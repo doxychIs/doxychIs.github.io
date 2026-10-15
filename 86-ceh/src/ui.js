@@ -1,7 +1,9 @@
+import { HELP } from './help.js';
 import { CONFIG } from './config.js';
 import { clickValue, incomePerSecond, unitProduction, isUnlocked, maxAffordable, priceFor, stageIndex, upgradeUnlocked } from './economy.js';
 import { formatNumber, money, count, duration } from './format.js';
 import { renderScene } from './scene.js';
+import { OPPONENTS } from './expansion-config.js';
 
 const $ = id => document.getElementById(id);
 const icon = name => `<svg class="icon" aria-hidden="true"><use href="#i-${name}"/></svg>`;
@@ -43,7 +45,11 @@ export class GameUI {
   }
 
   bind() {
+    document.querySelectorAll('[data-open-management]').forEach(button=>button.addEventListener('click',()=>{this.selectTab(button.dataset.openManagement);$('management-dialog').showModal();}));
+    document.querySelectorAll('[data-open-dialog]').forEach(button=>button.addEventListener('click',()=>$(button.dataset.openDialog).showModal()));
+    document.querySelectorAll('[data-open-help]').forEach(button=>button.addEventListener('click',()=>this.openHelp(button.dataset.openHelp)));
     $('produce-button').addEventListener('click', event => this.actions.produce(event));
+    $('robot-companion').addEventListener('click',event=>this.actions.produce(event));
     $('mobile-produce-button').addEventListener('click', event => this.actions.produce(event));
     if ('IntersectionObserver' in window) {
       this.produceObserver=new IntersectionObserver(entries=>{
@@ -93,6 +99,14 @@ export class GameUI {
     });
   }
 
+  openHelp(topic='current') {
+    if(topic==='current')topic=document.body.dataset.location;
+    const info=HELP[topic]??HELP.factory;
+    $('help-title').textContent=info.title;
+    $('help-content').innerHTML=info.paragraphs.map(text=>`<p>${text}</p>`).join('');
+    $('help-dialog').showModal();
+  }
+
   selectTab(name) {
     this.currentTab = name;
     document.querySelectorAll('[data-tab]').forEach(button => {
@@ -116,6 +130,7 @@ export class GameUI {
     setText($('produce-value'), `+${money(click)} за нажатие`);
     setText($('mobile-produce-value'), `+${money(click)}`);
     $('produce-button').disabled = paused;
+    $('robot-companion').disabled = paused;
     $('mobile-produce-button').disabled = paused;
     document.body.classList.toggle('paused',paused);
     const ownedTotal = Object.values(state.buildings).reduce((a,b)=>a+b,0);
@@ -128,14 +143,14 @@ export class GameUI {
       const price = priceFor(building,owned,shownQuantity);
       row.element.classList.toggle('locked',!unlocked);
       row.badge.hidden = !unlocked || owned > 0 || building.id === 'worker';
-      setText(row.subtitle,unlocked?building.subtitle:`Заработайте ${money(building.unlock)}`);
+      setText(row.subtitle,unlocked?building.subtitle:stage<(building.era??0)?`Нужна эпоха: ${CONFIG.stages[building.era].name}`:`Заработайте ${money(building.unlock)}`);
       setText(row.rate,`+${money(unitProduction(state,building))} / сек`);
       setText(row.owned,count(owned));
       setText(row.price,unlocked?money(price):'Закрыто');
       const caption = !unlocked ? 'Не открыт' : !Number.isFinite(price) ? 'Достигнут предел' : `Купить ×${count(shownQuantity)}`;
       setText(row.caption,caption);
       row.button.disabled = paused || !unlocked || quantity < 1 || price > state.money || !Number.isFinite(price);
-      row.button.setAttribute('aria-label', unlocked?`Купить: ${building.name}, ${count(shownQuantity)} шт., цена ${money(price)}`:`${building.name}: откроется после заработка ${money(building.unlock)}`);
+      row.button.setAttribute('aria-label', unlocked?`Купить: ${building.name}, ${count(shownQuantity)} шт., цена ${money(price)}`:`${building.name}: ${stage<(building.era??0)?`нужна эпоха ${CONFIG.stages[building.era].name}`:`заработайте ${money(building.unlock)}`}`);
     }
     let available=0;
     for (const upgrade of CONFIG.upgrades) {
@@ -148,6 +163,7 @@ export class GameUI {
       row.button.setAttribute('aria-label',installed?`${upgrade.name}: установлено`:`Улучшение «${upgrade.name}», ${upgrade.description}, цена ${money(upgrade.price)}`);
     }
     setText($('upgrade-count'),available?String(available):'');
+    setText($('quick-upgrade-count'),String(available));$('quick-upgrade-count').hidden=available===0;
     if(this.currentTab==='stats') {
       for(const [id,value] of Object.entries({total:money(state.totalEarned),objects:count(ownedTotal),clicks:count(state.clicks),manual:money(state.manualEarned),upgrades:`${state.upgrades.length} / ${CONFIG.upgrades.length}`,time:duration(state.playSeconds),offline:money(state.offlineEarned),stage:`${stage+1} / ${CONFIG.stages.length}`})) setText($(`stat-${id}`),value);
     }
@@ -172,7 +188,9 @@ export class GameUI {
     const next=CONFIG.stages[index+1];
     setText($('next-stage-label'),next?'СЛЕДУЮЩИЙ ЭТАП':'ДАЛЬШЕ — ТОЛЬКО ЗВЁЗДЫ');
     setText($('next-stage-name'),next?next.name:'Космическая империя');
-    setText($('next-stage-amount'),next?`${money(state.totalEarned)} / ${money(next.threshold)}`:'Все этапы открыты');
+    const boss=next&&OPPONENTS.find(enemy=>enemy.id===next.boss);
+    const needBoss=boss&&!state.progress.defeatedBosses.includes(boss.id);
+    setText($('next-stage-amount'),next?needBoss&&state.totalEarned>=next.threshold?`Победите: ${boss.name}`:`${money(state.totalEarned)} / ${money(next.threshold)}${needBoss?' + босс':''}`:'Все этапы открыты');
     const previous=CONFIG.stages[index].threshold;
     const percent=next?Math.min(100,(state.totalEarned-previous)/(next.threshold-previous)*100):100;
     $('stage-progress-fill').style.width=`${percent}%`;

@@ -13,7 +13,7 @@ export function formatNumber(value, decimals = 1) {
   return `${small.format(scaled)} ${suffixes[group]}`;
 }
 
-export const money = value => `${formatNumber(value)} ₽`;
+export const money = value => `${formatNumber(value)} DOX`;
 export function duration(seconds) {
   seconds = Math.max(0, Math.floor(seconds));
   if (seconds < 60) return `${seconds} сек`;

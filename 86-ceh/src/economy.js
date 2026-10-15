@@ -1,8 +1,9 @@
 import { CONFIG } from './config.js';
+import { eraIndex, productionFactor, characterBonuses } from './selectors.js';
 
 export const clampMoney = value => Math.max(0, Math.min(CONFIG.limits.money, Number.isFinite(value) ? value : CONFIG.limits.money));
 export const buildingById = id => CONFIG.buildings.find(item => item.id === id);
-export const isUnlocked = (state, building) => state.totalEarned >= building.unlock || state.buildings[building.id] > 0;
+export const isUnlocked = (state, building) => (state.totalEarned >= building.unlock && eraIndex(state)>=(building.era??0)) || state.buildings[building.id] > 0;
 
 export function multiplier(state, target) {
   return CONFIG.upgrades.reduce((value, upgrade) =>
@@ -10,7 +11,7 @@ export function multiplier(state, target) {
 }
 
 export function unitProduction(state, building) {
-  return clampMoney(building.production * multiplier(state, building.id) * multiplier(state, 'all'));
+  return clampMoney(building.production * multiplier(state, building.id) * multiplier(state, 'all') * productionFactor(state));
 }
 
 export function incomePerSecond(state) {
@@ -18,7 +19,7 @@ export function incomePerSecond(state) {
 }
 
 export function clickValue(state) {
-  return clampMoney((CONFIG.click.base + incomePerSecond(state) * CONFIG.click.passiveFraction) * multiplier(state, 'click'));
+  return clampMoney((CONFIG.click.base + incomePerSecond(state) * CONFIG.click.passiveFraction) * multiplier(state, 'click') * (1+characterBonuses(state).click));
 }
 
 // Сумма геометрической прогрессии; Infinity означает недостижимую цену.
@@ -82,11 +83,7 @@ export function buyUpgrade(state, id) {
   return true;
 }
 
-export function stageIndex(state) {
-  let index = 0;
-  CONFIG.stages.forEach((stage, i) => { if (state.totalEarned >= stage.threshold) index = i; });
-  return index;
-}
+export const stageIndex = eraIndex;
 
 export function offlineIncome(state, seconds) {
   const creditedSeconds = Math.max(0, Math.min(CONFIG.offline.maxSeconds, Number.isFinite(seconds) ? seconds : 0));

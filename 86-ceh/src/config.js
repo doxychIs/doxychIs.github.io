@@ -1,6 +1,7 @@
 // Все значения экономики и условия развития изменяются здесь.
 export const CONFIG = {
-  version: 1,
+  version: 2,
+  release: '3.1',
   saveKey: 'ceh.save.v1',
   autosaveMs: 15000,
   offline: { maxSeconds: 8 * 60 * 60, efficiency: 1 },
@@ -16,7 +17,9 @@ export const CONFIG = {
     { id: 'complex', name: 'Промкомплекс', subtitle: 'Целая экосистема производства', icon: 'complex', basePrice: 9000000, growthRate: 1.17, production: 260000, unlock: 7000000 },
     { id: 'city', name: 'Промышленный город', subtitle: 'Город работает на вашу империю', icon: 'city', basePrice: 240000000, growthRate: 1.18, production: 5200000, unlock: 180000000 },
     { id: 'planet', name: 'Планетарная индустрия', subtitle: 'Ресурсы целого мира', icon: 'planet', basePrice: 8000000000, growthRate: 1.18, production: 130000000, unlock: 6000000000 },
-    { id: 'space', name: 'Орбитальная верфь', subtitle: 'Следующий цех — среди звёзд', icon: 'space', basePrice: 300000000000, growthRate: 1.20, production: 3900000000, unlock: 240000000000 }
+    { id: 'space', name: 'Орбитальная верфь', subtitle: 'Следующий цех — среди звёзд', icon: 'space', basePrice: 300000000000, growthRate: 1.20, production: 3900000000, unlock: 240000000000, era:6 },
+    { id: 'fabricator', name: 'Фабрикатор деталей', subtitle: 'Металлолом каждые 18 сек с объекта', icon: 'tool', basePrice: 750, growthRate: 1.16, production: 3, unlock: 600 },
+    { id: 'salvage', name: 'Цех переработки', subtitle: 'Металлолом и золотые шестерни', icon: 'complex', basePrice: 40000, growthRate: 1.17, production: 220, unlock: 24000, era:1 }
   ],
   stages: [
     { name: 'Гараж', short: 'Гараж', threshold: 0, headline: 'Большое дело.\nМаленький гараж.', description: 'Один верстак, смелая идея и целая империя впереди.' },
@@ -43,3 +46,9 @@ export const CONFIG = {
     { id: 'stars', name: 'Технология звёзд', description: 'Всё пассивное производство ×3', target: 'all', multiplier: 3, price: 1500000000000, requirement: { building: 'space', owned: 3 }, icon: 'space' }
   ]
 };
+
+// Новые эпохи открываются деньгами и победой над боссом предыдущей эпохи.
+CONFIG.stages.forEach((stage,index)=>{ if(index>0)stage.boss=`rival-${index-1}-2`; });
+for(const [id,era] of [['workshop',1],['factory',2],['complex',3],['city',4],['planet',5]]) {
+  CONFIG.buildings.find(building=>building.id===id).era=era;
+}

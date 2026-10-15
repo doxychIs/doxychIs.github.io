@@ -12,8 +12,8 @@ export class Sound {
       oscillator.connect(gain); gain.connect(this.context.destination);
       const time = this.context.currentTime;
       oscillator.type = 'sine';
-      oscillator.frequency.setValueAtTime(kind === 'buy' ? 480 : 220, time);
-      oscillator.frequency.exponentialRampToValueAtTime(kind === 'buy' ? 760 : 100, time + 0.075);
+      oscillator.frequency.setValueAtTime(({buy:480,hit:135,impact:90,win:660,start:330}[kind] ?? 220), time);
+      oscillator.frequency.exponentialRampToValueAtTime(({buy:760,hit:60,impact:40,win:990,start:480}[kind] ?? 100), time + 0.075);
       gain.gain.setValueAtTime(0.035, time);
       gain.gain.exponentialRampToValueAtTime(0.001, time + 0.12);
       oscillator.start(time); oscillator.stop(time + 0.13);

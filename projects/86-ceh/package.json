@@ -1,0 +1,18 @@
+{
+  "name": "86-ceh",
+  "version": "3.1.0",
+  "private": true,
+  "type": "module",
+  "description": "86 ЦЕХ — производство, команда, модульные роботы и яркие игровые локации",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "preview": "node scripts/serve.mjs dist",
+    "build": "node scripts/build.mjs",
+    "build:yandex": "node scripts/build.mjs --yandex",
+    "test": "node --test tests/*.test.mjs",
+    "check": "node scripts/check.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
